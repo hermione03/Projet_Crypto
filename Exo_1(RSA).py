@@ -2,8 +2,9 @@
 import random
 
 
-#Partie 1
+###############################  Partie 1 ######################################
 
+#Exercice 01
 
 # 1)Fonction qui verifie si un nombre est premier :
 
@@ -90,26 +91,67 @@ def dechiffrer_rsa(mc:int):
     e = inverse_mod(d,phi_n) #Calcul de la clé privée 
     return expo_rapide(mc,e,n) 
 
-#7) Le message chiffré  qui correspond à la note 13 (avec d = 3, n= 33) est 19
+# #7) Le message chiffré  qui correspond à la note 13 (avec d = 3, n= 33) est 19
 
-p = 11                                       
-q = 3                                      
-n = p * q                                  
-phi_n = (p - 1) * (q - 1)                  
-d = 3
-print(f"Le message chiffré  qui correspond à la note 13 est : {chiffrer_rsa(13)}")
-
-
-#8) Vériffer que la clé privée de déchiffrement est 7 
-
-print("La clé privée de déchiffrement est bien 7 !" if inverse_mod(3, 20) == 7 else "Il y a une erreur !")
+# p = 11                                       
+# q = 3                                      
+# n = p * q                                  
+# phi_n = (p - 1) * (q - 1)                  
+# d = 3
+# print(f"Le message chiffré  qui correspond à la note 13 est : {chiffrer_rsa(13)}")
 
 
-#9) Si S = 9 alors cela correspond à la note : 15
+# #8) Vériffer que la clé privée de déchiffrement est 7 
 
-print(f"Le message '9', correspond à la note :  {dechiffrer_rsa(9)}")
+# print("La clé privée de déchiffrement est bien 7 !" if inverse_mod(3, 20) == 7 else "Il y a une erreur !")
 
-#10) La clé privée de déchiffrement en supposant que la clé publique de chiffrement soit (c = 3, n = 55) est : -13
 
-n = 55 #p = 5 , q = 11 , phi_n = 40
-print(f"La clé privée de déchiffrement est : {inverse_mod(d, 40)}")
+# #9) Si S = 9 alors cela correspond à la note : 15
+
+# print(f"Le message '9', correspond à la note :  {dechiffrer_rsa(9)}")
+
+# #10) La clé privée de déchiffrement en supposant que la clé publique de chiffrement soit (c = 3, n = 55) est : -13
+
+# n = 55 #p = 5 , q = 11 , phi_n = 40
+# print(f"La clé privée de déchiffrement est : {inverse_mod(d, 40)}")
+
+
+
+###############################  Partie 2 ######################################
+
+#Exercice 02
+
+
+#1) Fonction chiffrer_aff qui prend en paramètres deux entiers a et b (la clé de chiffrement), et une chaîne de caractère, et qui renvoie le texte dont chaque lettre a été chiffrée individuellement.
+
+alphabet = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i",
+                "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                "t", "u", "v", "w", "x", "y", "z", ",", "."]
+
+def chiffrer_aff(a,b,m) :
+    mc = ""  #message chiffré  
+    for i in range (len(m)):
+        indice_chiffree = (a* alphabet.index(m[i]) + b)%29
+        mc = mc + alphabet[indice_chiffree]        
+
+    return mc
+
+
+#2) En utilisant la clé (4, 21) , coder la phrase :  "la clef est dans le coffre ".
+
+print(f"Cela donne :{chiffrer_aff(4,21,'la clef est dans le coffre')}")
+
+
+#3) Fonction dechiffrer_aff qui prend en paramètres deux entiers a et b, et une chaîne caractère, et qui renvoie la chaîne originale, c'est-à-dire le texte qui a permis d'obtenir la chaîne en paramètre après chiffrement.
+
+def dechiffrer_aff(m,a,b) :
+    md = "" #message dechiffré   
+    inv_a = inverse_mod(a,29)
+    for i in range (len(m)):
+        md = md + alphabet[(inv_a * (alphabet.index(m[i]) - b))%29]        
+    return md
+
+
+#4) Déchiffrer le message "v.vlukyu,fwtfyooyn.ws" obtenu à partir de la clé (4, 21)
+
+print(f"'v.vlukyu,fwtfyooyn.ws' Donne : {dechiffrer_aff('v.vlukyu,fwtfyooyn.ws',4,21)}")
