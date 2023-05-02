@@ -3,8 +3,9 @@ import random
 
 
 ###############################  Partie 1 ######################################
-
+print("###############################  Partie 2 ######################################\n")
 #Exercice 01
+print("\n### Exercice 01 : ###\n")
 
 # 1)Fonction qui verifie si un nombre est premier :
 
@@ -49,6 +50,7 @@ def inverse_mod(a,n):
         return bezout(a,n)[1]
     else:
         print("Element non inversible !")
+        return None
 
 
 #4) Générer deux nombres premiers aléatoires p et q , et stocker la partie n de la clé publique. Fixer une variable globale d contenant l'autre partie de la clé publique.
@@ -91,36 +93,38 @@ def dechiffrer_rsa(mc:int):
     e = inverse_mod(d,phi_n) #Calcul de la clé privée 
     return expo_rapide(mc,e,n) 
 
-# #7) Le message chiffré  qui correspond à la note 13 (avec d = 3, n= 33) est 19
+#7) Le message chiffré  qui correspond à la note 13 (avec d = 3, n= 33) est 19
 
-# p = 11                                       
-# q = 3                                      
-# n = p * q                                  
-# phi_n = (p - 1) * (q - 1)                  
-# d = 3
-# print(f"Le message chiffré  qui correspond à la note 13 est : {chiffrer_rsa(13)}")
-
-
-# #8) Vériffer que la clé privée de déchiffrement est 7 
-
-# print("La clé privée de déchiffrement est bien 7 !" if inverse_mod(3, 20) == 7 else "Il y a une erreur !")
+p = 11                                       
+q = 3                                      
+n = p * q                                  
+phi_n = (p - 1) * (q - 1)                  
+d = 3
+print(f"Le message chiffré  qui correspond à la note 13 est : {chiffrer_rsa(13)}")
 
 
-# #9) Si S = 9 alors cela correspond à la note : 15
+#8) Vériffer que la clé privée de déchiffrement est 7 
 
-# print(f"Le message '9', correspond à la note :  {dechiffrer_rsa(9)}")
+print("La clé privée de déchiffrement est bien 7 !" if inverse_mod(3, 20) == 7 else "Il y a une erreur !")
 
-# #10) La clé privée de déchiffrement en supposant que la clé publique de chiffrement soit (c = 3, n = 55) est : -13
 
-# n = 55 #p = 5 , q = 11 , phi_n = 40
-# print(f"La clé privée de déchiffrement est : {inverse_mod(d, 40)}")
+#9) Si S = 9 alors cela correspond à la note : 15
+
+print(f"Le message '9', correspond à la note :  {dechiffrer_rsa(9)}")
+
+#10) La clé privée de déchiffrement en supposant que la clé publique de chiffrement soit (c = 3, n = 55) est : -13
+
+n = 55 #p = 5 , q = 11 , phi_n = 40
+print(f"La clé privée de déchiffrement est : {inverse_mod(d, 40)}")
 
 
 
 ###############################  Partie 2 ######################################
 
-#Exercice 02
+print("\n###############################  Partie 2 ######################################")
 
+#Exercice 02
+print("\n### Exercice 02 : ###\n")
 
 #1) Fonction chiffrer_aff qui prend en paramètres deux entiers a et b (la clé de chiffrement), et une chaîne de caractère, et qui renvoie le texte dont chaque lettre a été chiffrée individuellement.
 
@@ -155,3 +159,26 @@ def dechiffrer_aff(m,a,b) :
 #4) Déchiffrer le message "v.vlukyu,fwtfyooyn.ws" obtenu à partir de la clé (4, 21)
 
 print(f"'v.vlukyu,fwtfyooyn.ws' Donne : {dechiffrer_aff('v.vlukyu,fwtfyooyn.ws',4,21)}")
+
+
+#Exercice 03
+print("\n### Exercice 03 : ###\n")
+
+
+#1) Fonction qui détermine les fréquences d'apparition des lettres d'un texte passé en paramètre dans une liste.
+
+def frequency(t):
+    t = t.lower()
+    occ = {}
+    alphabet_occ = {" ": 0, "a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0,
+                    "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0,
+                    "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0}
+    for l in t:
+        alphabet_occ[l] += 1
+    for cle, valeur in alphabet_occ.items():
+        if valeur != 0 and cle != " ":
+            # print(cle, valeur)
+            occ[cle] = valeur
+    return occ
+
+
