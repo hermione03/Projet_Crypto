@@ -1,19 +1,22 @@
 
 import random
-from math import *
+
 
 #Partie 1
 
 
 # 1)Fonction qui verifie si un nombre est premier :
 
-def premier(n:int):
+def premier(n: int):
+    if n < 2:
+        return False
     d = 2
-    while(d <= sqrt(n) ):
-        if(n%d == 0):
-            return 0 #False --> n N'est pas premier
-        d+=1 
-    return 1 #True --> n est premier
+    while d * d <= n:
+        if n % d == 0:
+            return False
+        d += 1
+    return True #n est premier
+
 
 
 # 2) Fonction qui permet de générer un nombre premier aléatoire supérieur à une borne passée en paramètre:
@@ -49,22 +52,18 @@ def inverse_mod(a,n):
 
 #4) Générer deux nombres premiers aléatoires p et q , et stocker la partie n de la clé publique. Fixer une variable globale d contenant l'autre partie de la clé publique.
 
-global d,n,p,q
+
 
 ###### Initialisations Aléatoires ###########
-# p = gen_preums(10)                        #  
-# q = gen_preums(10)                        #
-# print(f"p: {p}, q: {q}")                  #
-# n = p * q                                 #
-# print(f"n : {n}")                         #
-# phi_n = (p - 1) * (q - 1)                 #
-#print(f"φ(n) : {phi_n}" )                  #
-# d = random.randint(1, n)                  #
+p = gen_preums(10)                          #  
+q = gen_preums(10)                          #
+print(f"p: {p}, q: {q}")                    #
+n = p * q                                   #
+print(f"n : {n}")                           #
+phi_n = (p - 1) * (q - 1)                   #
+print(f"φ(n) : {phi_n}" )                   #
+d = random.randint(1, n)                    #
 #############################################
-
-
-
-
 
 
 #5) Fonction chiffrer_rsa qui prend en paramètre un entier n , et qui renvoie la valeur chiffrée à l'aide de la clé (d, n):
@@ -107,6 +106,7 @@ print("La clé privée de déchiffrement est bien 7 !" if inverse_mod(3, 20) == 
 
 
 #9) Si S = 9 alors cela correspond à la note : 15
+
 print(f"Le message '9', correspond à la note :  {dechiffrer_rsa(9)}")
 
 #10) La clé privée de déchiffrement en supposant que la clé publique de chiffrement soit (c = 3, n = 55) est : -13
