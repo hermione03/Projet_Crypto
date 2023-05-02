@@ -139,18 +139,32 @@ print("φ(n) :", φn)
 
 
 
+# def expo_rapide(a, k, n):
+#     x = a%n
+#     if(k == 0):
+#         return 1 
+#     elif (k%2 == 0 ):
+#         aux = expo_rapide(x, k//2, n)
+#         res = (aux ** 2)%n
+#         return res
+#     else: 
+#         aux = expo_rapide(x, (k-1)//2, n)
+#         res = (x*(aux ** 2)) % n
+#         return res
+
 def expo_rapide(a, k, n):
-    x = a%n
-    if(k == 0):
-        return 1 
-    elif (k%2 == 0 ):
-        aux = expo_rapide(x, k//2, n)
-        res = (aux ** 2)%n
-        return res
-    else: 
-        aux = expo_rapide(x, (k-1)//2, n)
-        res = (x*(aux ** 2)) % n
-        return res
+    result = 1
+    a = a % n
+
+    while k > 0:
+        if k % 2 == 1:
+            result = (result * a) % n
+        a = (a * a) % n
+        k = k // 2
+
+    return result
+
+
 
 def chiffrer_rsa(m:int):
     return expo_rapide(m,d,n)
