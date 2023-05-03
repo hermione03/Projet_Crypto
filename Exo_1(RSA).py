@@ -194,19 +194,23 @@ def sort_dictionary(dictionary):
 def find_keys(c): #Dechiffrer
     sorted_l = sort_dictionary(c) 
     
-    #Recuperer incide_max et indice_second_max pour les deux cles
+    #Recuperer incide_max et indice_second_max pour les deux cles: 
+    
+    #Cle une :
     a = alphabet.index(sorted_l[0][0])
     b = alphabet.index(sorted_l[1][0])
+    #Cle deux :
     x = alphabet.index(sorted_l[1][0])
     y = alphabet.index(sorted_l[0][0])
     
-    #Calcul de b1 et b2
+    #Calcul de a1 et a2
     a = ((a - b) * inverse_mod(5,29)) %29
     x = ((x - y) * inverse_mod(5,29)) %29
     
     #Les deux clés 
     key_1 = (a , b)
     key_2 = (x, y)
+    
     return [key_1, key_2]
 
 
