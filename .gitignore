@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+test_exo1.py
+test_exo2.py
+resultat.txt

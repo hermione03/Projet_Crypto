@@ -170,7 +170,7 @@ print("\n### Exercice 03 : ###\n")
 def frequency(t):
     t = t.lower()
     occ = {}
-    alphabet_occ = {char: 0 for char in alphabet}
+    alphabet_occ = {char.lower(): 0 for char in alphabet}
     for l in t:
         alphabet_occ[l] += 1
     for lettre, nb_occ in alphabet_occ.items():
@@ -186,44 +186,35 @@ def frequency(t):
 
 #Fonction qui trie un dicctionnaire de façon décroissante trouvée sur internet 
 def sort_dictionary(dictionary):
-    sorted_dict = sorted(dictionary.items(), key=lambda x: x[1], reverse=True)
+    occ_letters = frequency(dictionary)
+    sorted_dict = sorted(occ_letters.items(), key=lambda x: x[1], reverse=True)
     return sorted_dict
 
 
-def tatonne(c):
-    occ_letters = frequency(c)
-    sorted_l = sort_dictionary(occ_letters) 
+def find_keys(c): #Dechiffrer
+    sorted_l = sort_dictionary(c) 
+    
+    #Recuperer incide_max et indice_second_max pour les deux cles
     a = alphabet.index(sorted_l[0][0])
     b = alphabet.index(sorted_l[1][0])
     x = alphabet.index(sorted_l[1][0])
     y = alphabet.index(sorted_l[0][0])
-    a = ((a - b) // 5)%29
-    x = ((x - y) // 5)%29
     
-    key_2 = (a , b)
-    key_1 = (x, y)
+    #Calcul de b1 et b2
+    a = ((a - b) * inverse_mod(5,29)) %29
+    x = ((x - y) * inverse_mod(5,29)) %29
+    
+    #Les deux clés 
+    key_1 = (a , b)
+    key_2 = (x, y)
     return [key_1, key_2]
 
-def tatonne2(c):
-    occ_letters = frequency(c)
-    sorted_l = sort_dictionary(occ_letters)
 
-    indice_max = alphabet.index(sorted_l[0][0])
-    indice_second_max = alphabet.index(sorted_l[1][0])
 
-    indice_E = alphabet.index('e')
-    indice_espace = alphabet.index(' ')
+test="akdyne .vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfidjnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfo dhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+print(find_keys(test))
 
-    a1 = ((indice_max - indice_second_max) //5)%29
-    a2 = ((indice_second_max - indice_max) //5)%29
 
-    b1 = indice_max
-    b2 = indice_second_max 
-
-    key_1 = (a1, b1)
-    key_2 = (a2, b2)
-
-    return [key_1, key_2]
 
 
 
@@ -231,37 +222,9 @@ def tatonne2(c):
 
 
 
-test="akdyne .vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfidjnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfo dhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
-print(tatonne2(test))
-
-# test2 = "je fais un teste tout aussi merdique vu que je suis toujours autant dans la merde"
-test2 = "je fais un teste de merde vu que je suis dans la merde"
-print(sort_dictionary(frequency(test2))[:2])
-#print(tatonne(test2))
-merde = chiffrer_aff(26,9,test2)
-print(tatonne(merde))
-print(tatonne2(merde))
-print(dechiffrer_aff(merde,26,9))
 
 
 
 
-print()
-def solve_congruence(a, b, c, m):
-    """
-    Résoudre l'équation ax + b ≡ c (mod m) pour a
-    Retourne la valeur de a qui satisfait l'équation
-    """
-    inverse_a = pow(a, -1, m)  # Calcul de l'inverse modulaire de a modulo m
-    result = (c - b) * inverse_a % m  # Calcul de la solution pour a
-    return result
-
-
-
-print()
-print(sort_dictionary(frequency(test))[:2])
-print(tatonne(test))
-print(solve_congruence(5,11,4,29))
-print(dechiffrer_aff(test,7,4))
 
 
