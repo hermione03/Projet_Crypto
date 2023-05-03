@@ -170,15 +170,98 @@ print("\n### Exercice 03 : ###\n")
 def frequency(t):
     t = t.lower()
     occ = {}
-    alphabet_occ = {" ": 0, "a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 0, "h": 0, "i": 0,
-                    "j": 0, "k": 0, "l": 0, "m": 0, "n": 0, "o": 0, "p": 0, "q": 0, "r": 0, "s": 0,
-                    "t": 0, "u": 0, "v": 0, "w": 0, "x": 0, "y": 0, "z": 0}
+    alphabet_occ = {char: 0 for char in alphabet}
     for l in t:
         alphabet_occ[l] += 1
-    for cle, valeur in alphabet_occ.items():
-        if valeur != 0 and cle != " ":
-            # print(cle, valeur)
-            occ[cle] = valeur
+    for lettre, nb_occ in alphabet_occ.items():
+        if nb_occ != 0:
+            occ[lettre] = nb_occ
     return occ
+
+
+
+
+#2) Fonction qui prend en paramètre une chaîne de caractères puis qui, à partir de la liste des fréquences d'apparition des caractères dans cette chaîne, associe E et '  ' aux deux caractères les plus fréquents. Ceci donne deux possibilités de clé (a 1 , b 1 ) ,(a 2 , b 2 ) , afficher les textes déchiffrés à l'aide de ces deux clés.
+
+
+#Fonction qui trie un dicctionnaire de façon décroissante trouvée sur internet 
+def sort_dictionary(dictionary):
+    sorted_dict = sorted(dictionary.items(), key=lambda x: x[1], reverse=True)
+    return sorted_dict
+
+
+def tatonne(c):
+    occ_letters = frequency(c)
+    sorted_l = sort_dictionary(occ_letters) 
+    a = alphabet.index(sorted_l[0][0])
+    b = alphabet.index(sorted_l[1][0])
+    x = alphabet.index(sorted_l[1][0])
+    y = alphabet.index(sorted_l[0][0])
+    a = ((a - b) // 5)%29
+    x = ((x - y) // 5)%29
+    
+    key_2 = (a , b)
+    key_1 = (x, y)
+    return [key_1, key_2]
+
+def tatonne2(c):
+    occ_letters = frequency(c)
+    sorted_l = sort_dictionary(occ_letters)
+
+    indice_max = alphabet.index(sorted_l[0][0])
+    indice_second_max = alphabet.index(sorted_l[1][0])
+
+    indice_E = alphabet.index('e')
+    indice_espace = alphabet.index(' ')
+
+    a1 = ((indice_max - indice_second_max) //5)%29
+    a2 = ((indice_second_max - indice_max) //5)%29
+
+    b1 = indice_max
+    b2 = indice_second_max 
+
+    key_1 = (a1, b1)
+    key_2 = (a2, b2)
+
+    return [key_1, key_2]
+
+
+
+#3) Déterminer la clé qui a servi à obtenir le message codé
+
+
+
+test="akdyne .vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfidjnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfo dhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+print(tatonne2(test))
+
+# test2 = "je fais un teste tout aussi merdique vu que je suis toujours autant dans la merde"
+test2 = "je fais un teste de merde vu que je suis dans la merde"
+print(sort_dictionary(frequency(test2))[:2])
+#print(tatonne(test2))
+merde = chiffrer_aff(26,9,test2)
+print(tatonne(merde))
+print(tatonne2(merde))
+print(dechiffrer_aff(merde,26,9))
+
+
+
+
+print()
+def solve_congruence(a, b, c, m):
+    """
+    Résoudre l'équation ax + b ≡ c (mod m) pour a
+    Retourne la valeur de a qui satisfait l'équation
+    """
+    inverse_a = pow(a, -1, m)  # Calcul de l'inverse modulaire de a modulo m
+    result = (c - b) * inverse_a % m  # Calcul de la solution pour a
+    return result
+
+
+
+print()
+print(sort_dictionary(frequency(test))[:2])
+print(tatonne(test))
+print(solve_congruence(5,11,4,29))
+print(dechiffrer_aff(test,7,4))
 
 
