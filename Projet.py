@@ -232,7 +232,7 @@ def THE_key(text, k1, k2):
     french_words = set()  # Set to store French words
     
     # Load French word dictionary
-    with open('french_word_dictionary.txt', 'r', encoding='utf-8') as file:
+    with open('indice.txt', 'r', encoding='utf-8') as file:
         for word in file:
             french_words.add(word.strip().lower())
 
@@ -257,14 +257,49 @@ def THE_key(text, k1, k2):
 
     return False
 
-test2 = chiffrer_aff(4,21,'la clef est dans le coffre')
+test2 = chiffrer_aff(4,21,'vive la programmation')
 
 
 print(THE_key(msc,(7,4),(22,10)))
-print(THE_key(test2,find_keys(test2)[0],find_keys(test2)[1]))
+KEY = THE_key(msc,(7,4),(22,10))
+print(dechiffrer_aff(msc,KEY[0],KEY[1]))
+print(find_keys(test2))
+# print(THE_key(test2,find_keys(test2)[0],find_keys(test2)[1]))
 
 
+def determiner_cle(chaine_charactere):
+    alphabet = [" ","a","b","c","d","e","f","g","h","i",
+                "j","k","l","m","n","o","p","q","r","s","t","u","v",
+                "w","x","y","z",",","."]
+    
+    list= frequency(chaine_charactere)
+    list_decroissant = sorted(list, key=list.get, reverse=True)
+    
+    #cas 1:
+    e_1 = alphabet.index(list_decroissant[0])
+    esp_1 = alphabet.index(list_decroissant[1])
 
+    #cas 2:
+    e_2 = alphabet.index(list_decroissant[1])
+    esp_2 = alphabet.index(list_decroissant[0])
+
+    b1 = esp_1
+    b2 = esp_2
+    a1 = ((e_1-b1) * inverse_mod(5,29)) %29
+    a2 = ((e_2-b2) * inverse_mod(5,29)) %29
+
+    print("a1:", a1, "b1:", b1, dechiffrer_aff(chaine_charactere, a1, b1))
+    print("a2:", a2, "b2:", b2, dechiffrer_aff(chaine_charactere, a2, b2))
+
+#3
+message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+
+print(determiner_cle(message))
+
+ms = "papa est un prout et maman fait popo il me faut une phrase plus longue donc tonton est un pid qui pue et tata une vielle chossette"
+m = chiffrer_aff(12,6,ms)
+print(find_keys(m))
+print(dechiffrer_aff(m,12,6))
 
 
 
