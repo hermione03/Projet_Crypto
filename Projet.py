@@ -1,4 +1,3 @@
-
 import random
 
 
@@ -220,10 +219,10 @@ def find_keys(c): #Dechiffrer
 
 #3) Déterminer la clé qui a servi à obtenir le message codé
 
-msc = "akdyne .vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfidjnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfo dhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
 
-print(find_keys(msc))
-
+print(find_keys(message))
+print(dechiffrer_aff(message,7,4))
 
 def THE_key(text, k1, k2):
     test_1 = dechiffrer_aff(text, k1[0], k1[1])
@@ -257,14 +256,7 @@ def THE_key(text, k1, k2):
 
     return False
 
-test2 = chiffrer_aff(4,21,'vive la programmation')
 
-
-print(THE_key(msc,(7,4),(22,10)))
-KEY = THE_key(msc,(7,4),(22,10))
-print(dechiffrer_aff(msc,KEY[0],KEY[1]))
-print(find_keys(test2))
-# print(THE_key(test2,find_keys(test2)[0],find_keys(test2)[1]))
 
 
 def determiner_cle(chaine_charactere):
@@ -292,14 +284,8 @@ def determiner_cle(chaine_charactere):
     print("a2:", a2, "b2:", b2, dechiffrer_aff(chaine_charactere, a2, b2))
 
 #3
-message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
-
 print(determiner_cle(message))
 
-ms = "papa est un prout et maman fait popo il me faut une phrase plus longue donc tonton est un pid qui pue et tata une vielle chossette"
-m = chiffrer_aff(12,6,ms)
-print(find_keys(m))
-print(dechiffrer_aff(m,12,6))
 
 
 
