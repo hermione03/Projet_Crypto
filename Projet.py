@@ -271,7 +271,7 @@ print(find_keys(test))
 
 ###############################  Partie 1 ######################################
 print("###############################  Partie 3 ######################################\n")
-#Exercice 01
+#Exercice 04
 print("\n### Exercice 04 : ###\n")
 
 #1) Écrire en Python des fonctions qui permettent:
@@ -284,6 +284,7 @@ def mult_mat2x2(mat1, mat2):
             for k in range(2):
                 res[i][j] += mat1[i][k] * mat2[k][j]
     return res
+
 
 #de multiplier une matrice par un vecteur de taille 2 :
 def mult_vec2(mat,vec):
@@ -311,18 +312,18 @@ def somme_vec(v1,v2):
 
 #2) fonction qui renvoie le texte découpé sous forme d'une liste de listes de deux caractères.
 
-# def decouper_texte(c):
-#     tdc = []
-#     pass
+
 def decouper_texte(txt):
     if len(txt) % 2 != 0:
-        txt = ' ' + txt
+        txt += ' '
     tdc = []
     i = 0
     while i < len(txt):
         tdc.append([txt[i], txt[i+1]])
         i += 2
     return tdc
+
+
 
 test= "testeuses"
 
@@ -341,25 +342,67 @@ def rassembler_texte(tdc):
 print(rassembler_texte(test_decoupe))
 
 #Foncrion qui donne pour chaque paire de lettres son indice dans l'alphabet
+# def texvecs(txt):
+#     vecs = []
+#     for l in txt:
+#         vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
+#     return vecs
+
+
 def texvecs(txt):
     vecs = []
     for l in txt:
-        vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
+        if len(l) >= 2:
+            vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
     return vecs
 
 
+# def chiffrer_hill(texte, matrice_A, vecteur_B):
+#     texte_chiffre = ''
+#     tdc = decouper_texte(texte)
+#     for paire in tdc:
+#         paire_indexed = texvecs([paire])
+#         print("paire_indexed : ", paire_indexed)
+#         paire_chiffree = mult_vec2(matrice_A, paire_indexed[0])
+#         paire_chiffree = [(indice + vecteur_B[i]) % 29 for i, indice in enumerate(paire_chiffree)]
+#         texte_chiffre += alphabet[paire_chiffree[0]] + alphabet[paire_chiffree[1]]
+#     return texte_chiffre
 
+# def chiffrer_hill(texte, matrice_A, vecteur_B):
+#     texte_chiffre = ""
+#     tdc = decouper_texte(texte)
+#     for paire in tdc:
+#         paire_chiffree = []
+#         for i in range(2):
+#             indice1 = alphabet.index(paire[0])
+#             indice2 = alphabet.index(paire[1])
+#             chiffre = (matrice_A[i][0] * indice1 + matrice_A[i][1] * indice2 + vecteur_B[i]) % 29
+#             lettre_chiffree = alphabet[chiffre]
+#             paire_chiffree.append(lettre_chiffree)
+#         texte_chiffre += "".join(paire_chiffree)
+#     return texte_chiffre
+def chiffrer_hill(texte, matrice_A, vecteur_B):
+    texte_chiffre = ""
+    tdc = decouper_texte(texte)
+    for paire in tdc:
+        paire_indexed = texvecs([paire])
+        paire_chiffree = mult_vec2(matrice_A, paire_indexed[0])
+        paire_chiffree = somme_vec(paire_chiffree, vecteur_B)
+        paire_chiffree = [indice % 29 for indice in paire_chiffree]
+        paire_chiffree = [alphabet[indice] for indice in paire_chiffree]
+        texte_chiffre += rassembler_texte([paire_chiffree])
+    return texte_chiffre
 
-
-def chiffrer_hill(c, A, B):
-    res = ''
-    c_indexed = texvecs(c)
-    for v in c_indexed:
-        res += (mult_vec2(A,v) ) % 29
-    return res
         
 
 mat = [[5, 7], [1, 15]]
 vec = [1, 2]
 print(texvecs(test_decoupe))
-print(chiffrer_hill(test_decoupe,mat, vec))
+print(chiffrer_hill(test,mat, vec))
+
+#! A finir 
+
+
+
+#Exercice 05
+print("\n### Exercice 05 : ###\n")
