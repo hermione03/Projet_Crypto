@@ -253,13 +253,113 @@ def THE_key(text, k1, k2):
     return False
 
 
-message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+m = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
 
-print(find_keys(message))
-print(dechiffrer_aff(message,7,4))
-
-
+print(find_keys(m))
+print(dechiffrer_aff(m,7,4))
 
 
+#4) Chiffrer le message "vive la programmation": 
+message = "vive la programmation"
+test = chiffrer_aff(16,22,message)
+print(find_keys(test))
+
+# Le resultat est [(19, 1), (10, 9)] aucune n'est la bonne cle , par consequant cette technique n'est pas valide pour ce message . 
+#La raison serai le fait que le message ne contienne qu'un seul "e", ce qui diminue considerablement le taut de reussite de la fonction ...
 
 
+
+###############################  Partie 1 ######################################
+print("###############################  Partie 3 ######################################\n")
+#Exercice 01
+print("\n### Exercice 04 : ###\n")
+
+#1) Écrire en Python des fonctions qui permettent:
+
+#de multiplier deux matrices 2 × 2 entre elles :
+def mult_mat2x2(mat1, mat2):
+    res = [[0, 0], [0, 0]]
+    for i in range(2):
+        for j in range(2):
+            for k in range(2):
+                res[i][j] += mat1[i][k] * mat2[k][j]
+    return res
+
+#de multiplier une matrice par un vecteur de taille 2 :
+def mult_vec2(mat,vec):
+    res = [0, 0]
+    for i in range(2):
+        for j in range(2):
+            res[i] += mat[i][j] * vec[j]
+    return res 
+
+#de multiplier tous les coeffcients d'une matrice par un nombre x:
+def mult_matrice(mat, x):
+    res = [[0, 0], [0, 0]]
+    for i in range(2):
+        for j in range(2):
+            res[i][j] = mat[i][j] * x
+    return res
+
+#de faire la somme de deux vecteurs de taille 2 :
+def somme_vec(v1,v2):
+    res = [0, 0]
+    for i in range(2):
+        res[i] = v1[i] + v2[i]
+    return res
+
+
+#2) fonction qui renvoie le texte découpé sous forme d'une liste de listes de deux caractères.
+
+# def decouper_texte(c):
+#     tdc = []
+#     pass
+def decouper_texte(txt):
+    if len(txt) % 2 != 0:
+        txt = ' ' + txt
+    tdc = []
+    i = 0
+    while i < len(txt):
+        tdc.append([txt[i], txt[i+1]])
+        i += 2
+    return tdc
+
+test= "testeuses"
+
+test_decoupe = decouper_texte(test)
+
+print(test_decoupe)
+
+#3) Fonction qui regroupe les lettres dans l'autre sens 
+
+def rassembler_texte(tdc):
+    txt = ' '
+    for l in tdc:
+        txt += l[0] + l[1] 
+    return txt
+
+print(rassembler_texte(test_decoupe))
+
+#Foncrion qui donne pour chaque paire de lettres son indice dans l'alphabet
+def texvecs(txt):
+    vecs = []
+    for l in txt:
+        vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
+    return vecs
+
+
+
+
+
+def chiffrer_hill(c, A, B):
+    res = ''
+    c_indexed = texvecs(c)
+    for v in c_indexed:
+        res += (mult_vec2(A,v) ) % 29
+    return res
+        
+
+mat = [[5, 7], [1, 15]]
+vec = [1, 2]
+print(texvecs(test_decoupe))
+print(chiffrer_hill(test_decoupe,mat, vec))
