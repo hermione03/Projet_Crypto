@@ -219,10 +219,6 @@ def find_keys(c): #Dechiffrer
 
 #3) Déterminer la clé qui a servi à obtenir le message codé
 
-message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
-
-print(find_keys(message))
-print(dechiffrer_aff(message,7,4))
 
 def THE_key(text, k1, k2):
     test_1 = dechiffrer_aff(text, k1[0], k1[1])
@@ -257,34 +253,13 @@ def THE_key(text, k1, k2):
     return False
 
 
+message = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
+
+print(find_keys(message))
+print(dechiffrer_aff(message,7,4))
 
 
-def determiner_cle(chaine_charactere):
-    alphabet = [" ","a","b","c","d","e","f","g","h","i",
-                "j","k","l","m","n","o","p","q","r","s","t","u","v",
-                "w","x","y","z",",","."]
-    
-    list= frequency(chaine_charactere)
-    list_decroissant = sorted(list, key=list.get, reverse=True)
-    
-    #cas 1:
-    e_1 = alphabet.index(list_decroissant[0])
-    esp_1 = alphabet.index(list_decroissant[1])
 
-    #cas 2:
-    e_2 = alphabet.index(list_decroissant[1])
-    esp_2 = alphabet.index(list_decroissant[0])
-
-    b1 = esp_1
-    b2 = esp_2
-    a1 = ((e_1-b1) * inverse_mod(5,29)) %29
-    a2 = ((e_2-b2) * inverse_mod(5,29)) %29
-
-    print("a1:", a1, "b1:", b1, dechiffrer_aff(chaine_charactere, a1, b1))
-    print("a2:", a2, "b2:", b2, dechiffrer_aff(chaine_charactere, a2, b2))
-
-#3
-print(determiner_cle(message))
 
 
 
