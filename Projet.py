@@ -398,15 +398,16 @@ def mat_aug(mat):
     return concat
 
 def inverse_mat(mat):
+    # Calcul du déterminant de la matrice
     det = mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
-    if det == 0:
-        print("La matrice n'est pas inversible modulo 29.")
+    inv_det = inverse_mod(det, 29)
+    if inverse_mod is None:
+        print("La matrice n'est pas inversible modulo 29!")
         return None
     else:
-        pass
+        inv_mat = [[(mat[1][1] * inv_det) % 29, (-mat[0][1] * inv_det) % 29],
+                   [(-mat[1][0] * inv_det) % 29, (mat[0][0] * inv_det) % 29]]
+        return inv_mat
     
 
-def gauss_jordan(mat):
-    pass
-
-print(mat_aug(A))
+print("eh",inverse_mat(A))
