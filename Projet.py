@@ -1,5 +1,5 @@
 import random
-
+from numpy import identity
 
 ###############################  Partie 1 ######################################
 print("###############################  Partie 2 ######################################\n")
@@ -357,32 +357,8 @@ def texvecs(txt):
     return vecs
 
 
-# def chiffrer_hill(texte, matrice_A, vecteur_B):
-#     texte_chiffre = ''
-#     tdc = decouper_texte(texte)
-#     for paire in tdc:
-#         paire_indexed = texvecs([paire])
-#         print("paire_indexed : ", paire_indexed)
-#         paire_chiffree = mult_vec2(matrice_A, paire_indexed[0])
-#         paire_chiffree = [(indice + vecteur_B[i]) % 29 for i, indice in enumerate(paire_chiffree)]
-#         texte_chiffre += alphabet[paire_chiffree[0]] + alphabet[paire_chiffree[1]]
-#     return texte_chiffre
-
-# def chiffrer_hill(texte, matrice_A, vecteur_B):
-#     texte_chiffre = ""
-#     tdc = decouper_texte(texte)
-#     for paire in tdc:
-#         paire_chiffree = []
-#         for i in range(2):
-#             indice1 = alphabet.index(paire[0])
-#             indice2 = alphabet.index(paire[1])
-#             chiffre = (matrice_A[i][0] * indice1 + matrice_A[i][1] * indice2 + vecteur_B[i]) % 29
-#             lettre_chiffree = alphabet[chiffre]
-#             paire_chiffree.append(lettre_chiffree)
-#         texte_chiffre += "".join(paire_chiffree)
-#     return texte_chiffre
 def chiffrer_hill(texte, matrice_A, vecteur_B):
-    texte_chiffre = ""
+    tc = ""
     tdc = decouper_texte(texte)
     for paire in tdc:
         paire_indexed = texvecs([paire])
@@ -390,8 +366,8 @@ def chiffrer_hill(texte, matrice_A, vecteur_B):
         paire_chiffree = somme_vec(paire_chiffree, vecteur_B)
         paire_chiffree = [indice % 29 for indice in paire_chiffree]
         paire_chiffree = [alphabet[indice] for indice in paire_chiffree]
-        texte_chiffre += rassembler_texte([paire_chiffree])
-    return texte_chiffre
+        tc += rassembler_texte([paire_chiffree])
+    return tc
 
         
 
@@ -406,3 +382,31 @@ print(chiffrer_hill(test,mat, vec))
 
 #Exercice 05
 print("\n### Exercice 05 : ###\n")
+
+A = [[1, 2, 1],
+     [2, 1, 0],
+     [1, 0, 1]]
+
+
+#fonction qui forme la matrice augmentee  
+def mat_aug(mat):
+    I = identity(len(mat),dtype=int).tolist() #matrice identite 
+    concat = mat
+    #concaenation de la matrice "mat" avec la matrice identité 
+    for i in range(len(A)):
+        concat[i].extend(I[i])
+    return concat
+
+def inverse_mat(mat):
+    det = mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
+    if det == 0:
+        print("La matrice n'est pas inversible modulo 29.")
+        return None
+    else:
+        pass
+    
+
+def gauss_jordan(mat):
+    pass
+
+print(mat_aug(A))
