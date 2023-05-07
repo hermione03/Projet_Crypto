@@ -2,7 +2,7 @@ import random
 from numpy import identity
 
 ###############################  Partie 1 ######################################
-print("###############################  Partie 2 ######################################\n")
+print("###############################  Partie 1 ######################################\n")
 #Exercice 01
 print("\n### Exercice 01 : ###\n")
 
@@ -59,11 +59,11 @@ def inverse_mod(a,n):
 ###### Initialisations Aléatoires ###########
 p = gen_preums(10)                          #  
 q = gen_preums(10)                          #
-print(f"p: {p}, q: {q}")                    #
+#print(f"p: {p}, q: {q}")                    #
 n = p * q                                   #
-print(f"n : {n}")                           #
+#print(f"n : {n}")                           #
 phi_n = (p - 1) * (q - 1)                   #
-print(f"φ(n) : {phi_n}" )                   #
+#print(f"φ(n) : {phi_n}" )                   #
 d = random.randint(1, n)                    #
 #############################################
 
@@ -220,40 +220,6 @@ def find_keys(c): #Dechiffrer
 
 #3) Déterminer la clé qui a servi à obtenir le message codé
 
-
-def THE_key(text, k1, k2):
-    test_1 = dechiffrer_aff(text, k1[0], k1[1])
-    test_2 = dechiffrer_aff(text, k2[0], k2[1])
-    
-    french_words = set()  # Set to store French words
-    
-    # Load French word dictionary
-    with open('indice.txt', 'r', encoding='utf-8') as file:
-        for word in file:
-            french_words.add(word.strip().lower())
-
-    words_1 = test_1.split()  # Split text into words
-    words_2 = test_2.split()  # Split text into words
-
-    for word in words_1:
-        # Clean the word by removing punctuation and converting to lowercase
-        cleaned_word = ''.join(c for c in word if c.isalpha()).lower()
-        
-        # Check if cleaned word is in the French word dictionary
-        if cleaned_word in french_words:
-            return k1
-    
-    for word in words_2:
-        # Clean the word by removing punctuation and converting to lowercase
-        cleaned_word = ''.join(c for c in word if c.isalpha()).lower()
-        
-        # Check if cleaned word is in the French word dictionary
-        if cleaned_word in french_words:
-            return k2
-
-    return False
-
-
 m = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
 
 print(find_keys(m))
@@ -315,7 +281,7 @@ def somme_vec(v1,v2):
 
 
 def decouper_texte(txt):
-    if len(txt) % 2 != 0:
+    if (len(txt) % 2 != 0):#verifier la parité du texte , si impaire ajouter " "
         txt = ' ' + txt
     tdc = [] #texte decoupe
     i = 0
@@ -359,9 +325,6 @@ def chiffrer_hill(txt, matrice_A, vecteur_B):
     return tc
 
 
-
-
-
 #5) chiffrer "vive les vacance" 
 test= "vive les vacances"    
 mat = [[5, 7], [1, 15]]
@@ -376,24 +339,12 @@ print(text_chiffree)
 print("\n### Exercice 05 : ###\n")
 
 
-
-#fonction qui forme la matrice augmentee  
-def mat_aug(mat):
-    I = identity(len(mat),dtype=int).tolist() #matrice identite 
-    concat = mat
-    #concaenation de la matrice "mat" avec la matrice identité 
-    for i in range(len(mat)):
-        concat[i].extend(I[i])
-    return concat
-
 def inverse_mat(mat):
     # Calcul du déterminant de la matrice
     det = (mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]) % 29
-    print(det)
     inv_det = inverse_mod(det, 29)
-    print(inv_det)
     if inv_det is None:
-        print("La matrice n'est pas inversible modulo 29!")
+        print("La matrice n'est pas inversible modulo 29 !")
         return None
     else:
         inv_mat = [[(mat[1][1] * inv_det) % 29, (-mat[0][1] * inv_det) % 29],
@@ -401,11 +352,9 @@ def inverse_mat(mat):
         return inv_mat
 
 
-
 def dechiffrer_hill(txt, matrice_A, vecteur_B):
     md = "" #message dechiffré   
     inv_a = inverse_mat(matrice_A)
-    print(inv_a)
     tdc = decouper_texte(txt)
     for p in tdc:
         pi = texvecs([p])
