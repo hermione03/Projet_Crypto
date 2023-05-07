@@ -130,6 +130,7 @@ print("\n### Exercice 02 : ###\n")
 alphabet = [" ", "a", "b", "c", "d", "e", "f", "g", "h", "i",
                 "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                 "t", "u", "v", "w", "x", "y", "z", ",", "."]
+#alphabet = [" ":0, "a":1, "b":2, "c":3, "d":4, "e":5, "f":6, "g":7, "h":8, "i":9,"j":10, "k":11, "l":12, "m":13, "n":14, "o":15, "p":16, "q":17, "r":18, "s":19,"t":20, "u":21, "v":22, "w":23, "x":24, "y":25, "z":26, ",":27, ".":28]
 
 def chiffrer_aff(a,b,m) :
     mc = ""  #message chiffré  
@@ -299,14 +300,14 @@ def mult_matrice(mat, x):
     res = [[0, 0], [0, 0]]
     for i in range(2):
         for j in range(2):
-            res[i][j] = mat[i][j] * x
+            res[i][j] = mat[i][j] * x 
     return res
 
 #de faire la somme de deux vecteurs de taille 2 :
 def somme_vec(v1,v2):
     res = [0, 0]
     for i in range(2):
-        res[i] = v1[i] + v2[i]
+        res[i] = v1[i] + v2[i] 
     return res
 
 
@@ -315,8 +316,8 @@ def somme_vec(v1,v2):
 
 def decouper_texte(txt):
     if len(txt) % 2 != 0:
-        txt += ' '
-    tdc = []
+        txt = ' ' + txt
+    tdc = [] #texte decoupe
     i = 0
     while i < len(txt):
         tdc.append([txt[i], txt[i+1]])
@@ -324,31 +325,16 @@ def decouper_texte(txt):
     return tdc
 
 
-
-test= "testeuses"
-
-test_decoupe = decouper_texte(test)
-
-print(test_decoupe)
-
 #3) Fonction qui regroupe les lettres dans l'autre sens 
 
 def rassembler_texte(tdc):
-    txt = ' '
+    txt = ''
     for l in tdc:
-        txt += l[0] + l[1] 
+        txt += l[0] + l[1]
     return txt
 
-print(rassembler_texte(test_decoupe))
 
-#Foncrion qui donne pour chaque paire de lettres son indice dans l'alphabet
-# def texvecs(txt):
-#     vecs = []
-#     for l in txt:
-#         vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
-#     return vecs
-
-
+#Foncrion qui donne pour chaque paire de lettres son indice dans l'alphabet sous forme de vecteurs 
 def texvecs(txt):
     vecs = []
     for l in txt:
@@ -357,35 +343,38 @@ def texvecs(txt):
     return vecs
 
 
-def chiffrer_hill(texte, matrice_A, vecteur_B):
+def chiffrer_hill(txt, matrice_A, vecteur_B):
     tc = ""
-    tdc = decouper_texte(texte)
-    for paire in tdc:
-        paire_indexed = texvecs([paire])
-        paire_chiffree = mult_vec2(matrice_A, paire_indexed[0])
-        paire_chiffree = somme_vec(paire_chiffree, vecteur_B)
-        paire_chiffree = [indice % 29 for indice in paire_chiffree]
-        paire_chiffree = [alphabet[indice] for indice in paire_chiffree]
-        tc += rassembler_texte([paire_chiffree])
+    tdc = decouper_texte(txt)
+    for p in tdc:
+        # pi = pire indexée 
+        pi = texvecs([p])
+        #pc = paire chiffrée
+        pc = mult_vec2(matrice_A, pi[0]) 
+        pc = somme_vec(pc, vecteur_B)
+        pc = [indice % 29 for indice in pc] # A * v + B [29]
+        pc = [alphabet[indice] for indice in pc] # transforme chaque indice en caractere correspendant de l'laphabet
+        tc += rassembler_texte([pc])
+        
     return tc
 
-        
 
+
+
+
+#5) chiffrer "vive les vacance" 
+test= "vive les vacances"    
 mat = [[5, 7], [1, 15]]
 vec = [1, 2]
-print(texvecs(test_decoupe))
-print(chiffrer_hill(test,mat, vec))
+text_chiffree = chiffrer_hill(test,mat, vec)
+print(text_chiffree)
 
-#! A finir 
 
 
 
 #Exercice 05
 print("\n### Exercice 05 : ###\n")
 
-A = [[1, 2, 1],
-     [2, 1, 0],
-     [1, 0, 1]]
 
 
 #fonction qui forme la matrice augmentee  
@@ -393,21 +382,41 @@ def mat_aug(mat):
     I = identity(len(mat),dtype=int).tolist() #matrice identite 
     concat = mat
     #concaenation de la matrice "mat" avec la matrice identité 
-    for i in range(len(A)):
+    for i in range(len(mat)):
         concat[i].extend(I[i])
     return concat
 
 def inverse_mat(mat):
     # Calcul du déterminant de la matrice
-    det = mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]
+    det = (mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0]) % 29
+    print(det)
     inv_det = inverse_mod(det, 29)
-    if inverse_mod is None:
+    print(inv_det)
+    if inv_det is None:
         print("La matrice n'est pas inversible modulo 29!")
         return None
     else:
         inv_mat = [[(mat[1][1] * inv_det) % 29, (-mat[0][1] * inv_det) % 29],
                    [(-mat[1][0] * inv_det) % 29, (mat[0][0] * inv_det) % 29]]
         return inv_mat
-    
 
-print("eh",inverse_mat(A))
+
+
+def dechiffrer_hill(txt, matrice_A, vecteur_B):
+    md = "" #message dechiffré   
+    inv_a = inverse_mat(matrice_A)
+    print(inv_a)
+    tdc = decouper_texte(txt)
+    for p in tdc:
+        pi = texvecs([p])
+        vecteur_B_oppose = [-vecteur_B[i] % 29 for i in range(2)]
+        pc = somme_vec(pi[0], vecteur_B_oppose)
+        pc = mult_vec2(inv_a, pc)
+        pc = [indice % 29 for indice in pc]
+        pc = [alphabet[indice] for indice in pc]
+        md += rassembler_texte([pc])
+    return md
+
+
+print(dechiffrer_hill( text_chiffree,mat,vec))
+
