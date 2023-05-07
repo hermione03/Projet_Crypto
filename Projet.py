@@ -1,3 +1,7 @@
+# Prenom : Maria 
+# Nom : Messaoud-Nacer 
+# N° Etudiant : 21007612  
+
 import random
 from numpy import identity
 
@@ -215,9 +219,6 @@ def find_keys(c): #Dechiffrer
 
 
 
-
-
-
 #3) Déterminer la clé qui a servi à obtenir le message codé
 
 m = "akdyne.vxnk bijdju.dfodjoujhrajdcjd.jyboigfjudgfid jnhj..jo.dcjdybiqqnjndj.dcjdcjybiqqnjndfodhjuukxjsdcvo.dajdyvo.jofdojdcvi.dj.njdyvoofdgfjdcjduvodj, jci.jfndj.dcjduvodcju.iok.kinjz"
@@ -279,7 +280,6 @@ def somme_vec(v1,v2):
 
 #2) fonction qui renvoie le texte découpé sous forme d'une liste de listes de deux caractères.
 
-
 def decouper_texte(txt):
     if (len(txt) % 2 != 0):#verifier la parité du texte , si impaire ajouter " "
         txt = ' ' + txt
@@ -304,10 +304,8 @@ def rassembler_texte(tdc):
 def texvecs(txt):
     vecs = []
     for l in txt:
-        if len(l) >= 2:
-            vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
+        vecs.append([alphabet.index(l[0]), alphabet.index(l[1])])
     return vecs
-
 
 def chiffrer_hill(txt, matrice_A, vecteur_B):
     tc = ""
@@ -368,4 +366,26 @@ def dechiffrer_hill(txt, matrice_A, vecteur_B):
 
 
 print(dechiffrer_hill( text_chiffree,mat,vec))
+
+
+
+
+import random
+
+### Exercice 05 - BONUS : ###
+print("\n### BONUS : ###\n")
+
+
+def matrice_aleatoire():
+    return [[random.randint(0, 28) for _ in range(2)] for _ in range(2)]
+
+
+# bd = "petit test de cet exercice bonus bd."
+# mat_test = matrice_aleatoire()
+# #print(mat_test)
+# vec_b = [0, 0]
+# bd_chiffre  = chiffrer_hill(bd,mat_test,vec_b)
+# print(bd_chiffre)
+
+
 
