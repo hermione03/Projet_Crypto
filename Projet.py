@@ -370,7 +370,7 @@ print(dechiffrer_hill( text_chiffree,mat,vec))
 
 
 
-import random
+
 
 ### Exercice 05 - BONUS : ###
 print("\n### BONUS : ###\n")
